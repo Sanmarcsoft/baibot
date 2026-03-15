@@ -582,6 +582,15 @@ async fn handle_stage_text_generation(
         return None;
     }
 
+    // Response value filter: suppress low-value responses in group chats
+    let text = match crate::response_filter::filter_response(&text) {
+        Some(filtered) => filtered,
+        None => {
+            tracing::info!("Response suppressed by value filter");
+            return None;
+        }
+    };
+
     let send_message_response = bot
         .messaging()
         .send_text_markdown_no_fail(message_context.room(), text.clone(), response_type)

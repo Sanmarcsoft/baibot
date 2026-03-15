@@ -3,6 +3,7 @@ mod bot;
 mod controller;
 mod conversation;
 mod entity;
+pub mod response_filter;
 mod strings;
 mod utils;
 
